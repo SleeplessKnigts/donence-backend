@@ -1,0 +1,55 @@
+loggin:
+  level:
+    org:
+      springframework: ERROR
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        id:
+          new_generator_mappings: false
+  datasource:
+    initialization-mode: always
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+    schema: classpath:/schema.sql
+    username: postgres
+    password: admin
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 532359242300-hasl95te55t67kov942nlcp1utjc8e1j.apps.googleusercontent.com
+            clientSecret: UJjlC6tjiLZWV2_6qPF268hG
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
+          facebook:
+            clientId: #TODO
+            clientSecret: #TODO
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
+        provider:
+          facebook:
+              authorizationUri: https://www.facebook.com/v3.0/dialog/oauth
+              tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
+              userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
+
+app:
+  auth:
+    tokenSecret: 
+    tokenExpiration: 2592000000 #equals to a month
+  oauth2:
+    authorizedRedirectUris:
+      -http://localhost:3000/oauth2/redirect
+      -androidapp://oauth2/redirect
