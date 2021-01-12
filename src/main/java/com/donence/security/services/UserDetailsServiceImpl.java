@@ -42,4 +42,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return UserDetailsImpl.build(user);
     }
+
+    @Transactional
+    public UserDetails loadUserById(Integer userId) throws UserPrincipalNotFoundException {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new UserPrincipalNotFoundException("User Not Found with -> id : " + userId)
+                );
+        return UserDetailsImpl.build(user);
+    }
 }
