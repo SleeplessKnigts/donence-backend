@@ -4,16 +4,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
-//Lombok is used to prevent verbose class structure. @Data provides essential methods like getter, setter, hashCode etc.
+// Lombok is used to prevent verbose class structure. @Data provides essential
+// methods like getter, setter, hashCode etc.
 @Data
 @NoArgsConstructor
-@Table(name = "users", schema = "public",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"username"}),
-                @UniqueConstraint(columnNames = {"email"})})
+@Table(name = "users", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }),
+        @UniqueConstraint(columnNames = { "email" }) })
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
@@ -25,6 +23,15 @@ public class User {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "auth_provider")
+    private String authProvider;
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    @Column(name = "f_name")
+    private String fName;
 
     public User(String email, String username) {
         this.email = email;
