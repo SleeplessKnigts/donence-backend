@@ -10,7 +10,7 @@ import javax.persistence.*;
 // methods like getter, setter, hashCode etc.
 @Data
 @NoArgsConstructor
-@Table(name = "users", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }),
+@Table(name = "cloud_users", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }),
         @UniqueConstraint(columnNames = { "email" }) })
 public class User {
     @Id
@@ -37,4 +37,8 @@ public class User {
         this.email = email;
         this.username = username;
     }
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 }

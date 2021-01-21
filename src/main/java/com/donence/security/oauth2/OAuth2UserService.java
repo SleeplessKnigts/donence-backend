@@ -1,5 +1,8 @@
 package com.donence.security.oauth2;
 
+import com.donence.model.Role;
+import com.donence.model.Roles;
+import com.donence.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -23,6 +26,9 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
@@ -48,11 +54,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
         Optional<User> userOptional = userRepository.findByEmail(oAuth2UserInfo.getEmail());
         User user;
-        if (userOptional.isPresent()) {
-            user = userOptional.get();
-        } else {
-            user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
-        }
+        user = userOptional.orElseGet(() -> registerNewUser(oAuth2UserRequest, oAuth2UserInfo));
 
         return UserDetailsImpl.build(user, oAuth2User.getAttributes());
     }
@@ -60,10 +62,13 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
     private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
         System.out.println("Hello");
         User user = new User();
+        //TODO hard-coded
+        Role role = userService.findByRole(Roles.ROLE_ADMIN);
         user.setAuthProvider(oAuth2UserRequest.getClientRegistration().getRegistrationId());
         user.setFName(oAuth2UserInfo.getName());
         user.setEmail(oAuth2UserInfo.getEmail());
         user.setImageUrl(oAuth2UserInfo.getImageUrl());
+        user.setRole(role);
         System.out.println(user);
         return userRepository.save(user);
     }
