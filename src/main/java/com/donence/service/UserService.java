@@ -6,6 +6,11 @@ import com.donence.model.User;
 
 public interface UserService {
     User save(User user);
+
     User getUserById(Integer userId);
+
     Role findByRole(Roles role);
+
+    User getUserByEmail(String email);
+
 }
