@@ -21,8 +21,7 @@ public class TokenProvider {
         this.appProperties = appProperties;
     }
 
-    public String createToken(Authentication authentication) {
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+    public String createToken(UserDetailsImpl userPrincipal) {
 
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + appProperties.getAuth().getTokenExpirationMsec());
