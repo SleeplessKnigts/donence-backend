@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Integer userId) {
         // User user = userRepository.findById(userId)
-        //         .orElseThrow(() -> new Exception("User could not be found with given id!"));
+        // .orElseThrow(() -> new Exception("User could not be found with given id!"));
         Optional<User> user = userRepository.findById(userId);
         return user.orElse(null);
     }
@@ -36,4 +36,11 @@ public class UserServiceImpl implements UserService {
         Optional<Role> role = roleRepository.findByRole(roleName);
         return role.orElse(null);
     }
+
+    @Override
+    public User getUserByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return user.orElse(null);
+    }
+
 }

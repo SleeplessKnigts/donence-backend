@@ -2,6 +2,7 @@ package com.donence.security.oauth2;
 
 import com.donence.config.AppProperties;
 import com.donence.security.TokenProvider;
+import com.donence.security.services.UserDetailsImpl;
 import com.donence.utils.CookieUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,8 +63,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         }
 
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
-
-        String token = tokenProvider.createToken(authentication);
+        UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
+        String token = tokenProvider.createToken(userDetailsImpl);
 
         return UriComponentsBuilder.fromUriString(targetUrl).queryParam("token", token).build().toUriString();
     }
