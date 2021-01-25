@@ -30,11 +30,6 @@ public class AuthenticationController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/welcome")
-    public String tempRequest() {
-        return "Welcome";
-    }
-
     /**
      * This endpoint provide login functionality for mobile devices.
      */
