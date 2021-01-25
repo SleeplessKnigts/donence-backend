@@ -22,11 +22,6 @@ public class AuthenticationController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/welcome")
-    public String tempRequest() {
-        return "Welcome";
-    }
-
     @PostMapping("login")
     public ResponseEntity<?> authenticateUser() {
         return new ResponseEntity("Successful login.", HttpStatus.OK);
