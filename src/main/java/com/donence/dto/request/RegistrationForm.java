@@ -8,10 +8,15 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class RegistrationForm {
     @NotBlank
-    private String username;
+    private String name;
 
     @NotBlank
     @Email
     private String email;
 
+    @NotBlank
+    private String authProvider;
+
+    @NotBlank
+    private String imageUrl;
 }
