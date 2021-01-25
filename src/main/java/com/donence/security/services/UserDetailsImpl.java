@@ -2,6 +2,8 @@ package com.donence.security.services;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.donence.model.Role;
+import com.donence.model.Roles;
 import com.donence.model.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,9 +21,10 @@ public class UserDetailsImpl implements UserDetails, OAuth2User {
     private String email;
     @JsonIgnore
     private String password;
+    private Role role;
     private Map<String, Object> attributes;
 
-    public UserDetailsImpl(Integer id, String email) {
+    public UserDetailsImpl(Integer id, String email, Role role) {
         this.id = id;
         this.email = email;
     }
@@ -29,7 +32,8 @@ public class UserDetailsImpl implements UserDetails, OAuth2User {
     public static UserDetailsImpl build(User user) {
         return new UserDetailsImpl(
                 user.getId(),
-                user.getEmail()
+                user.getEmail(),
+                user.getRole()
         );
     }
 
