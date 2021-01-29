@@ -33,7 +33,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
             String accessToken = getJwtFromRequest(request);
-            System.out.println("I should not be here!");
             if (StringUtils.hasText(accessToken) && tokenProvider.validateToken(accessToken)) {
                 Integer userId = tokenProvider.getUserIdFromToken(accessToken);
                 UserDetails userDetails = userDetailsService.loadUserById(userId);
