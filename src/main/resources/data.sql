@@ -1,6 +1,9 @@
-insert into cloud_roles (role)
-select 'ROLE_ADMIN' where not exists(select * from cloud_roles where role='ROLE_ADMIN');
-insert into cloud_roles (role)
-select 'ROLE_DRIVER' where not exists(select * from cloud_roles where role='ROLE_DRIVER');
-insert into cloud_roles (role)
-select 'ROLE_USER' where not exists(select * from cloud_roles where role='ROLE_USER');
+INSERT INTO cloud_roles (role)
+SELECT 'ROLE_ADMIN'
+WHERE NOT EXISTS(SELECT * FROM cloud_roles WHERE role = 'ROLE_ADMIN');
+INSERT INTO cloud_roles (role)
+SELECT 'ROLE_DRIVER'
+WHERE NOT EXISTS(SELECT * FROM cloud_roles WHERE role = 'ROLE_DRIVER');
+INSERT INTO cloud_roles (role)
+SELECT 'ROLE_USER'
+WHERE NOT EXISTS(SELECT * FROM cloud_roles WHERE role = 'ROLE_USER');
