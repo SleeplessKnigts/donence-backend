@@ -33,7 +33,7 @@ public class AuthenticationController {
     /**
      * This endpoint provide login functionality for mobile devices.
      */
-    @PostMapping("/login")
+    @PostMapping("login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody RegistrationForm loginForm,
             HttpServletRequest request) {
         User user = userService.getUserByEmail(loginForm.getEmail());
