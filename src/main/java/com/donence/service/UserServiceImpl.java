@@ -7,7 +7,10 @@ import com.donence.model.Roles;
 import com.donence.model.User;
 import com.donence.repository.RoleRepository;
 import com.donence.repository.UserRepository;
+import com.donence.security.services.UserDetailsImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -41,6 +44,20 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
         return user.orElse(null);
+    }
+
+    /**
+     * @param authentication Spring security authentication object
+     * @implNote This method returns a authenticated User object related to authentication object
+    */
+    public User getUserByAuthentication(Authentication authentication) {
+        if(authentication.getPrincipal() instanceof UserDetailsImpl){
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            User user = userRepository.findByUsername(userDetails.getUsername())
+                    .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User cannot find"));
+            return user;
+        }
+        return null;
     }
 
 }
