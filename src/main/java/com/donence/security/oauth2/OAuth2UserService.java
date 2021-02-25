@@ -55,21 +55,13 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
         Optional<User> userOptional = userRepository.findByEmail(oAuth2UserInfo.getEmail());
         User user;
         user = userOptional.orElseGet(() -> registerNewUser(oAuth2UserRequest, oAuth2UserInfo));
-
         return UserDetailsImpl.build(user, oAuth2User.getAttributes());
     }
 
     private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
-        System.out.println("Hello");
-        User user = new User();
-        //TODO hard-coded
         Role role = userService.findByRole(Roles.ROLE_ADMIN);
-        user.setAuthProvider(oAuth2UserRequest.getClientRegistration().getRegistrationId());
-        user.setFName(oAuth2UserInfo.getName());
-        user.setEmail(oAuth2UserInfo.getEmail());
-        user.setImageUrl(oAuth2UserInfo.getImageUrl());
-        user.setRole(role);
-        System.out.println(user);
-        return userRepository.save(user);
+        User newUser = new User(oAuth2UserRequest.getClientRegistration().getRegistrationId(), oAuth2UserInfo.getName(),
+                oAuth2UserInfo.getEmail(), oAuth2UserInfo.getImageUrl(), role);
+        return userRepository.save(newUser);
     }
 }

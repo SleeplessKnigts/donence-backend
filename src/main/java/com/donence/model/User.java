@@ -41,4 +41,13 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
+
+
+    public User(String authProvider, String name, String email, String imageUrl, Role role){
+        this.authProvider = authProvider;
+        this.fName = name;
+        this.email = email;
+        this.imageUrl = imageUrl;
+        this.role = role;
+    }
 }

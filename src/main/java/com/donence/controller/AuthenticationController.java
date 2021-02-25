@@ -11,6 +11,7 @@ import com.donence.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,22 +39,20 @@ public class AuthenticationController {
             HttpServletRequest request) {
         User user = userService.getUserByEmail(loginForm.getEmail());
         UserDetailsImpl userPrincipal;
+        String currentRole;
         if (user != null) { // User is registered before, build the principal
             userPrincipal = UserDetailsImpl.build(user);
+            currentRole = userPrincipal.getAuthorities().iterator().next().getAuthority();
         } else { // First login, register user!
-            User newUser = new User();
             Role role = userService.findByRole(Roles.ROLE_USER);
-            newUser.setAuthProvider(loginForm.getAuthProvider());
-            newUser.setFName(loginForm.getName());
-            newUser.setEmail(loginForm.getEmail());
-            newUser.setImageUrl(loginForm.getImageUrl());
-            newUser.setRole(role);
+            User newUser = new User(loginForm.getAuthProvider(), loginForm.getName(), loginForm.getEmail(),
+                    loginForm.getImageUrl(), role);
+            currentRole = "ROLE_USER";
             userService.save(newUser);
             userPrincipal = UserDetailsImpl.build(newUser);
         }
         String accessToken = jwtProvider.createToken(userPrincipal);
         return ResponseEntity.ok(new LoginResponse(accessToken, userPrincipal.getEmail(), userPrincipal.getUsername(),
-                userPrincipal.getRole(), userPrincipal.getName()));
-
+                currentRole, userPrincipal.getName()));
     }
 }
