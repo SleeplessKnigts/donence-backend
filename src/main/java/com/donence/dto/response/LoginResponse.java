@@ -11,13 +11,13 @@ public class LoginResponse {
 
     private String email;
 
-    private Role role;
+    private String role;
 
     private String username;
 
     private String name;
 
-    public LoginResponse(String accessToken,String email, String username, Role role, String name){
+    public LoginResponse(String accessToken,String email, String username, String role, String name){
         this.accessToken = accessToken;
         this.email = email;
         this.username = username;
