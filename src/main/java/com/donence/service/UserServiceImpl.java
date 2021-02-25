@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
     public User getUserByAuthentication(Authentication authentication) {
         if(authentication.getPrincipal() instanceof UserDetailsImpl){
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-            User user = userRepository.findByUsername(userDetails.getUsername())
+            User user = userRepository.findByEmail(userDetails.getEmail())
                     .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User cannot find"));
             return user;
         }
