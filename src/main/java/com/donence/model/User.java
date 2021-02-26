@@ -1,9 +1,19 @@
 package com.donence.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Entity
 // Lombok is used to prevent verbose class structure. @Data provides essential
@@ -33,15 +43,20 @@ public class User {
     @Column(name = "f_name")
     private String fName;
 
-    public User(String email, String username) {
-        this.email = email;
-        this.username = username;
-    }
+    @Column(name = "latitude")
+    private double latitude;
+
+    @Column(name = "longitude")
+    private double longitude;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
-
+    
+    public User(String email, String username) {
+        this.email = email;
+        this.username = username;
+    }
 
     public User(String authProvider, String name, String email, String imageUrl, Role role){
         this.authProvider = authProvider;
@@ -49,5 +64,10 @@ public class User {
         this.email = email;
         this.imageUrl = imageUrl;
         this.role = role;
+    }
+
+    public void setAddress(double lat, double lon){
+        setLatitude(lat);
+        setLongitude(lon);
     }
 }

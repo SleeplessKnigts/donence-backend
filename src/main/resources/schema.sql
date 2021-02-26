@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS cloud_users
     auth_provider  TEXT NOT NULL,
     image_url      TEXT,
     f_name         TEXT,
-    address        POINT,
+    latitude       FLOAT,
+    longitude      FLOAT,
     address_detail TEXT
 );
 
