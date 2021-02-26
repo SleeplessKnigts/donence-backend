@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
     @Autowired
     UserService userService;
+
+    /**
+     * An endpoint for getting user details
+     * 
+     */
+    @GetMapping("/me")
+    public ResponseEntity<?> getProfile(){
+        User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
+        return ResponseEntity.ok().body(user);
+    }
 
     /**
      * An endpoint for address saving functionality.
