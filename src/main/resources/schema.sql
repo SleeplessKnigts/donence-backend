@@ -52,3 +52,12 @@ CREATE TABLE IF NOT EXISTS "collection_events"
     geolocation          POINT,
     event_date           TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS "requests"
+(
+    request_id   SERIAL PRIMARY KEY,
+    created_at   TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT TRUE,
+    request_type TEXT NOT NULL,
+    issuer INT NOT NULL REFERENCES cloud_users (id)
+);
