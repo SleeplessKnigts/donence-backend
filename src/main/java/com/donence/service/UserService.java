@@ -1,5 +1,8 @@
 package com.donence.service;
 
+import java.util.List;
+
+import com.donence.model.Request;
 import com.donence.model.Role;
 import com.donence.model.Roles;
 import com.donence.model.User;
@@ -16,4 +19,16 @@ public interface UserService {
     User getUserByEmail(String email);
 
     User getUserByAuthentication(Authentication authentication);
+
+    List<Request> getRequestsOfUser(User user);
+
+    List<Request> getActiveRequestsOfUser(User user);
+
+    List<Request> getNonActiveRequestOfUser(User user);
+
+    boolean canUserMakeRequest(User user, String requestType);
+
+    Request createRequest(User user, String requestType);
+
+    Request removeRequest(User user, Integer requestId);
 }
