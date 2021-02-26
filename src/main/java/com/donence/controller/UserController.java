@@ -1,8 +1,11 @@
 package com.donence.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import com.donence.dto.request.SetAddressForm;
+import com.donence.model.Request;
 import com.donence.model.User;
 import com.donence.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,7 @@ public class UserController {
      * 
      */
     @GetMapping("/me")
-    public ResponseEntity<?> getProfile(){
+    public ResponseEntity<?> getProfile() {
         User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
         return ResponseEntity.ok().body(user);
     }
@@ -55,5 +58,26 @@ public class UserController {
         user.setAddress(setAddressForm.getLat(), setAddressForm.getLon());
         userService.save(user);
         return ResponseEntity.ok().body(user);
+    }
+
+    @GetMapping("/requests/all")
+    public ResponseEntity<?> getAllRequests(){
+        User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
+        List<Request> requests = userService.getRequestsOfUser(user);
+        return ResponseEntity.ok().body(requests);
+    }
+
+    @GetMapping("/requests/active")
+    public ResponseEntity<?> getActiveRequests(){
+        User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
+        List<Request> requests = userService.getActiveRequestsOfUser(user);
+        return ResponseEntity.ok().body(requests);
+    }
+
+    @GetMapping("/requests/completed")
+    public ResponseEntity<?> getNonActiveRequests(){
+        User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
+        List<Request> requests = userService.getNonActiveRequestOfUser(user);
+        return ResponseEntity.ok().body(requests);
     }
 }
