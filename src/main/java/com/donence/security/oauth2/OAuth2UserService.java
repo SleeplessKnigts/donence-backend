@@ -59,7 +59,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
     }
 
     private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
-        Role role = userService.findByRole(Roles.ROLE_ADMIN);
+        Role role = userService.findByRole(Roles.ROLE_USER);
         User newUser = new User(oAuth2UserRequest.getClientRegistration().getRegistrationId(), oAuth2UserInfo.getName(),
                 oAuth2UserInfo.getEmail(), oAuth2UserInfo.getImageUrl(), role);
         return userRepository.save(newUser);
