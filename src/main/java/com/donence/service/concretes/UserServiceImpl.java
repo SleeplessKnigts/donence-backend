@@ -1,9 +1,7 @@
-package com.donence.service;
+package com.donence.service.concretes;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import com.donence.model.Request;
 import com.donence.model.Role;
@@ -14,6 +12,7 @@ import com.donence.repository.RoleRepository;
 import com.donence.repository.UserRepository;
 import com.donence.security.services.UserDetailsImpl;
 
+import com.donence.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -62,30 +61,26 @@ public class UserServiceImpl implements UserService {
     public User getUserByAuthentication(Authentication authentication) {
         if (authentication.getPrincipal() instanceof UserDetailsImpl) {
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-            User user = userRepository.findByEmail(userDetails.getEmail())
+            return userRepository.findByEmail(userDetails.getEmail())
                     .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User cannot find"));
-            return user;
         }
         return null;
     }
 
     @Override
     public List<Request> getRequestsOfUser(User user) {
-        List<Request> requests = requestRepository.findByIssuerOrderByCreationDateDesc(user);
-        return requests;
+        return requestRepository.findByIssuerOrderByCreationDateDesc(user);
     }
 
     @Override
     public List<Request> getActiveRequestsOfUser(User user) {
-        List<Request> activeRequests = requestRepository.findByIsActiveAndIssuerOrderByCreationDateDesc(true, user);
-        return activeRequests;
+        return requestRepository.findByIsActiveAndIssuerOrderByCreationDateDesc(true, user);
     }
 
     @Override
     public List<Request> getNonActiveRequestOfUser(User user) {
-        List<Request> nonActiveRequests = requestRepository.findByIsActiveAndIssuerOrderByCreationDateDesc(false,
+        return requestRepository.findByIsActiveAndIssuerOrderByCreationDateDesc(false,
                 user);
-        return nonActiveRequests;
     }
 
     @Override

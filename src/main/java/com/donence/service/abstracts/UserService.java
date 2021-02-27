@@ -1,4 +1,4 @@
-package com.donence.service;
+package com.donence.service.abstracts;
 
 import java.util.List;
 
