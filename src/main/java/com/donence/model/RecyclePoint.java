@@ -11,11 +11,19 @@ import javax.persistence.*;
 public class RecyclePoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Integer recyclePointId;
 
-    @Column(name = "recycle_point_name")
-    private String recylePointName;
+    @Column(name = "recycle_point_detail")
+    private String recyclePointDetail;
 
-    @Column(name = "geolocation")
-    private Point geolocation;
+    @Column(name = "recycle_point_latitude")
+    private Double recyclePointLatitude;
+
+    @Column(name = "recycle_point_longitude")
+    private Double recyclePointLongitude;
+
+    public void setGeolocation(Double latitude, Double longitude){
+        this.recyclePointLatitude = latitude;
+        this.recyclePointLongitude = longitude;
+    }
 }

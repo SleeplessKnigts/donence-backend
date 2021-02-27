@@ -9,8 +9,9 @@ import javax.validation.constraints.NotBlank;
 public class RecyclePointDto {
 
     @NotBlank
-    private String recyclePointName;
+    private String recyclePointDetail;
 
-    @NotBlank
-    private Point geolocation;
+    private Double latitude;
+
+    private Double longitude;
 }
