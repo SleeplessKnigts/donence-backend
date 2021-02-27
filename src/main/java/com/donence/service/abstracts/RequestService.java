@@ -11,4 +11,6 @@ public interface RequestService{
     List<Request> getRequestsByActiveAndIssuerOrderByCreationDateDesc(Boolean isActive, User issuer);
 
     List<Request> getRequestsByIssuerOrderByCreationDateDesc(User issuer);
+
+    List<Request> getRequestOrderByCreationDateDesc();
 }

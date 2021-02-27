@@ -29,4 +29,9 @@ public class RequestServiceImpl implements RequestService {
     public List<Request> getRequestsByIssuerOrderByCreationDateDesc(User issuer) {
         return requestRepository.findByIssuerOrderByCreationDateDesc(issuer);
     }
+
+    @Override
+    public List<Request> getRequestOrderByCreationDateDesc() {
+        return requestRepository.findAllByOrderByCreationDateDesc();
+    }
 }

@@ -28,4 +28,5 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
     List<Request> findByIsActiveAndIssuerAndRequestTypeOrderByCreationDateDesc(boolean isActive, User issuer,
             String requestType);
 
+    List<Request> findAllByOrderByCreationDateDesc();
 }
