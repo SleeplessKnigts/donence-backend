@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web){
         web.ignoring().antMatchers("/api/auth/**");
     }
 
@@ -53,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/error", "/favicon.ico", "/**/*.css", "/**/*.js", "/**/*.html", "/**/*.jpg")
                 .permitAll()
                 .antMatchers("/oauth2/**").permitAll()
-                .antMatchers("/api/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and().oauth2Login()
                 .authorizationEndpoint().baseUri("/api/oauth2/authorize")
