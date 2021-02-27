@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS cloud_users
     f_name         TEXT,
     latitude       FLOAT,
     longitude      FLOAT,
-    address_detail TEXT
+    address_detail TEXT,
+    role_id        INT  NOT NULL REFERENCES cloud_roles (role_id)
 );
 
 CREATE TABLE IF NOT EXISTS "cloud_roles"
@@ -16,12 +17,12 @@ CREATE TABLE IF NOT EXISTS "cloud_roles"
     role_id SERIAL PRIMARY KEY,
     role    VARCHAR(50) NOT NULL UNIQUE
 );
-
 CREATE TABLE IF NOT EXISTS "recycle_points"
 (
-    recycle_point_id     SERIAL PRIMARY KEY,
-    recycle_point_detail TEXT NOT NULL,
-    geolocation          POINT
+    recycle_point_id        SERIAL PRIMARY KEY,
+    recycle_point_detail    TEXT NOT NULL,
+    recycle_point_latitude  FLOAT,
+    recycle_point_longitude FLOAT
 );
 
 CREATE TABLE IF NOT EXISTS "news"
@@ -57,7 +58,7 @@ CREATE TABLE IF NOT EXISTS "requests"
 (
     request_id   SERIAL PRIMARY KEY,
     created_at   TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-    active BOOLEAN NOT NULL DEFAULT TRUE,
-    request_type TEXT NOT NULL,
-    issuer INT NOT NULL REFERENCES cloud_users (id)
+    active       BOOLEAN                     NOT NULL DEFAULT TRUE,
+    request_type TEXT                        NOT NULL,
+    issuer       INT                         NOT NULL REFERENCES cloud_users (id)
 );
