@@ -7,7 +7,7 @@ import javax.validation.Valid;
 import com.donence.dto.request.SetAddressForm;
 import com.donence.model.Request;
 import com.donence.model.User;
-import com.donence.service.UserService;
+import com.donence.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,7 +37,7 @@ public class UserController {
     /**
      * An endpoint for address saving functionality.
      * 
-     * @param SetAdressForm required request body including lat-lon double fields.
+     * @param setAddressForm required request body including lat-lon double fields.
      */
     @PostMapping("/address")
     public ResponseEntity<?> setAddress(@Valid @RequestBody SetAddressForm setAddressForm) {
@@ -50,7 +50,7 @@ public class UserController {
     /**
      * An endpoint for address saving functionality.
      * 
-     * @param SetAdressForm required request body including lat-lon double fields.
+     * @param setAddressForm required request body including lat-lon double fields.
      */
     @PutMapping("/address")
     public ResponseEntity<?> changeAddress(@Valid @RequestBody SetAddressForm setAddressForm) {

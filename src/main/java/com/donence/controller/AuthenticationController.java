@@ -7,11 +7,10 @@ import com.donence.model.Roles;
 import com.donence.model.User;
 import com.donence.security.TokenProvider;
 import com.donence.security.services.UserDetailsImpl;
-import com.donence.service.UserService;
+import com.donence.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;

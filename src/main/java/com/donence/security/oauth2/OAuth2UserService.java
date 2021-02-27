@@ -2,7 +2,7 @@ package com.donence.security.oauth2;
 
 import com.donence.model.Role;
 import com.donence.model.Roles;
-import com.donence.service.UserService;
+import com.donence.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
