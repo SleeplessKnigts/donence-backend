@@ -1,4 +1,10 @@
-CREATE TABLE IF NOT EXISTS cloud_users
+CREATE TABLE IF NOT EXISTS "cloud_roles"
+(
+    role_id SERIAL PRIMARY KEY,
+    role    VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS "cloud_users"
 (
     id             INT PRIMARY KEY,
     username       TEXT UNIQUE,
@@ -12,11 +18,6 @@ CREATE TABLE IF NOT EXISTS cloud_users
     role_id        INT  NOT NULL REFERENCES cloud_roles (role_id)
 );
 
-CREATE TABLE IF NOT EXISTS "cloud_roles"
-(
-    role_id SERIAL PRIMARY KEY,
-    role    VARCHAR(50) NOT NULL UNIQUE
-);
 CREATE TABLE IF NOT EXISTS "recycle_points"
 (
     recycle_point_id        SERIAL PRIMARY KEY,
