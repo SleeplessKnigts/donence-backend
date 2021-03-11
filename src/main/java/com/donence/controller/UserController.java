@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,23 +62,31 @@ public class UserController {
     }
 
     @GetMapping("/requests/all")
-    public ResponseEntity<?> getAllRequests(){
+    public ResponseEntity<?> getAllRequests() {
         User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
         List<Request> requests = userService.getRequestsOfUser(user);
         return ResponseEntity.ok().body(requests);
     }
 
     @GetMapping("/requests/active")
-    public ResponseEntity<?> getActiveRequests(){
+    public ResponseEntity<?> getActiveRequests() {
         User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
         List<Request> requests = userService.getActiveRequestsOfUser(user);
         return ResponseEntity.ok().body(requests);
     }
 
     @GetMapping("/requests/completed")
-    public ResponseEntity<?> getNonActiveRequests(){
+    public ResponseEntity<?> getNonActiveRequests() {
         User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
         List<Request> requests = userService.getNonActiveRequestOfUser(user);
         return ResponseEntity.ok().body(requests);
+    }
+
+    @GetMapping("requests/canI/{type}")
+    public ResponseEntity<?> canUserMakeRequest(@PathVariable String type) {
+        User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
+        boolean canThee = userService.canUserMakeRequest(user, type);
+        return canThee ? ResponseEntity.ok().body("Go on then!")
+                : ResponseEntity.badRequest().body("You have request already");
     }
 }
