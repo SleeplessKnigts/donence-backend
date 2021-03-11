@@ -7,8 +7,10 @@ import com.donence.utils.CookieUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -16,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import static com.donence.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
 
@@ -65,8 +69,26 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
         UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
         String token = tokenProvider.createToken(userDetailsImpl);
+        String userType = "";
+        for (GrantedAuthority role : userDetailsImpl.getAuthorities()) {
+            switch (role.getAuthority()) {
+                case "ROLE_ADMIN":
+                    userType = "395cc606-30da-4789-9bd3-acc1add79ef9";
+                    break;
+                case "ROLE_USER":
+                    userType = "8a6ee639-a7e6-456f-af12-2b714df5fecd";
+                    break;
+                case "ROLE_DRIVER":
+                    userType = "2612bedd-ae65-4ed6-a8e1-8c7f868294d6";
+                    break;
+                default:
+                    userType = "user";
+                    break;
+            }
+        }
 
-        return UriComponentsBuilder.fromUriString(targetUrl).queryParam("token", token).build().toUriString();
+        return UriComponentsBuilder.fromUriString(targetUrl).queryParam("token", token).queryParam("userType", userType)
+                .build().toUriString();
     }
 
     protected void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {
