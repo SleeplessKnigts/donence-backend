@@ -61,24 +61,24 @@ public class UserController {
         return ResponseEntity.ok().body(user);
     }
 
-    @GetMapping("/requests/all")
-    public ResponseEntity<?> getAllRequests() {
+    @GetMapping("/requests/{status}")
+    public ResponseEntity<?> getRequestsByStatus(@PathVariable String status) {
         User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
-        List<Request> requests = userService.getRequestsOfUser(user);
-        return ResponseEntity.ok().body(requests);
-    }
-
-    @GetMapping("/requests/active")
-    public ResponseEntity<?> getActiveRequests() {
-        User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
-        List<Request> requests = userService.getActiveRequestsOfUser(user);
-        return ResponseEntity.ok().body(requests);
-    }
-
-    @GetMapping("/requests/completed")
-    public ResponseEntity<?> getNonActiveRequests() {
-        User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
-        List<Request> requests = userService.getNonActiveRequestOfUser(user);
+        List<Request> requests;
+        switch (status) {
+        case "all":
+            requests = userService.getRequestsOfUser(user);
+            break;
+        case "active":
+            requests = userService.getActiveRequestsOfUser(user);
+            break;
+        case "completed":
+            requests = userService.getNonActiveRequestOfUser(user);
+            break;
+        default:
+            requests = null;
+            break;
+        }
         return ResponseEntity.ok().body(requests);
     }
 
