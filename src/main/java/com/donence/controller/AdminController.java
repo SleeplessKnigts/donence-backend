@@ -27,15 +27,15 @@ public class AdminController {
     UserService userService;
 
     @GetMapping("/recycle-point/")
-    public ResponseEntity<List<RecyclePoint>> getRecyclePoints() {
-        return ResponseEntity.ok(recyclePointService.getRecyclePoints());
+    public ResponseEntity<List<RecyclePointDto>> getRecyclePoints() {
+        return ResponseEntity.ok(recyclePointService.getRecyclePointDtos());
     }
 
     @PostMapping("/recycle-point/new")
     public ResponseEntity<?> addRecyclePoint(@RequestBody RecyclePointDto recyclePointDto) {
         RecyclePoint recyclePoint = new RecyclePoint();
         recyclePoint.setRecyclePointDetail(recyclePointDto.getRecyclePointDetail());
-        recyclePoint.setGeolocation(recyclePointDto.getLatitude(), recyclePointDto.getLongitude());
+        recyclePoint.setGeolocation(recyclePointDto.getLat(), recyclePointDto.getLng());
         recyclePointService.add(recyclePoint);
         return ResponseEntity.ok("Recycle point added successfully");
     }

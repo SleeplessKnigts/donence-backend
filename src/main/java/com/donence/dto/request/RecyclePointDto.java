@@ -11,7 +11,13 @@ public class RecyclePointDto {
     @NotBlank
     private String recyclePointDetail;
 
-    private Double latitude;
+    private Double lat;
 
-    private Double longitude;
+    private Double lng;
+
+    public RecyclePointDto(@NotBlank String recyclePointDetail, Double lat, Double lng) {
+        this.recyclePointDetail = recyclePointDetail;
+        this.lat = lat;
+        this.lng = lng;
+    }
 }
