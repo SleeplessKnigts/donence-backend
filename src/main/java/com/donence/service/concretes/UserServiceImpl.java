@@ -67,22 +67,28 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    
     @Override
     public List<Request> getRequestsOfUser(User user) {
         return requestRepository.findByIssuerOrderByCreationDateDesc(user);
     }
-
+    
     @Override
     public List<Request> getActiveRequestsOfUser(User user) {
         return requestRepository.findByIsActiveAndIssuerOrderByCreationDateDesc(true, user);
     }
-
+    
     @Override
     public List<Request> getNonActiveRequestOfUser(User user) {
         return requestRepository.findByIsActiveAndIssuerOrderByCreationDateDesc(false,
-                user);
+        user);
     }
 
+    @Override
+    public List<Request> getRequestsOfUserFilteredByTypeAndStatus(User user, String type, boolean isActive) {
+        return requestRepository.findByIsActiveAndIssuerAndRequestTypeOrderByCreationDateDesc(isActive, user, type);
+    }
+    
     @Override
     public boolean canUserMakeRequest(User user, String requestType) {
         List<Request> requests = requestRepository.findByIsActiveAndIssuerOrderByCreationDateDesc(true, user);

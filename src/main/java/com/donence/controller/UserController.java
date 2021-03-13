@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import com.donence.dto.request.SetAddressForm;
 import com.donence.model.Request;
 import com.donence.model.User;
+import com.donence.service.abstracts.RequestService;
 import com.donence.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    RequestService requestService;
 
     /**
      * An endpoint for getting user details
@@ -79,6 +83,13 @@ public class UserController {
             requests = null;
             break;
         }
+        return ResponseEntity.ok().body(requests);
+    }
+
+    @GetMapping("/requests/{type}")
+    public ResponseEntity<?> getRequestsByType(@PathVariable String type) {
+        User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
+        List<Request> requests = userService.getRequestsOfUserFilteredByTypeAndStatus(user, type, false);
         return ResponseEntity.ok().body(requests);
     }
 

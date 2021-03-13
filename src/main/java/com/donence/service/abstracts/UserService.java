@@ -26,6 +26,8 @@ public interface UserService {
 
     List<Request> getNonActiveRequestOfUser(User user);
 
+    List<Request> getRequestsOfUserFilteredByTypeAndStatus(User user, String type, boolean isActive);
+
     boolean canUserMakeRequest(User user, String requestType);
 
     Request createRequest(User user, String requestType);
