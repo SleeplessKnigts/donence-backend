@@ -86,10 +86,25 @@ public class UserController {
         return ResponseEntity.ok().body(requests);
     }
 
-    @GetMapping("/requests/{type}")
-    public ResponseEntity<?> getRequestsByType(@PathVariable String type) {
+    @GetMapping("/requests/{type}/{status}")
+    public ResponseEntity<?> getRequestsByType(@PathVariable String type, @PathVariable String status) {
         User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
-        List<Request> requests = userService.getRequestsOfUserFilteredByTypeAndStatus(user, type, false);
+        List<Request> requests;
+        switch (status) {
+        case "all":
+            requests = userService.getRequestsOfUserFilteredByTypeAndStatus(user, type, true);
+            requests.addAll(userService.getRequestsOfUserFilteredByTypeAndStatus(user, type, false));
+            break;
+        case "active":
+            requests = userService.getRequestsOfUserFilteredByTypeAndStatus(user, type, true);
+            break;
+        case "completed":
+            requests = userService.getRequestsOfUserFilteredByTypeAndStatus(user, type, false);
+            break;
+        default:
+            requests = null;
+            break;
+        }
         return ResponseEntity.ok().body(requests);
     }
 
