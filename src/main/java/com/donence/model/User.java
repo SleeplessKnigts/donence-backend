@@ -17,6 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
@@ -51,10 +52,10 @@ public class User {
     private String fName;
 
     @Column(name = "latitude")
-    private double latitude;
+    private Double latitude;
 
     @Column(name = "longitude")
-    private double longitude;
+    private Double longitude;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
@@ -62,6 +63,7 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "issuer", cascade = CascadeType.ALL)
     @JsonManagedReference
+    @JsonIgnore
     private Set<Request> requests = new HashSet<>();
     
     public User(String email, String username) {

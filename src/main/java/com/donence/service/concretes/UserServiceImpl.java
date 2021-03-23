@@ -92,6 +92,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean canUserMakeRequest(User user, String requestType) {
         List<Request> requests = requestRepository.findByIsActiveAndIssuerOrderByCreationDateDesc(true, user);
+
+        if(user.getLatitude() == null || user.getLongitude() == null){
+            return false;
+        }
+
         for (Request request : requests) {
             if (!request.getRequestType().equals(requestType)) {
                 continue;
