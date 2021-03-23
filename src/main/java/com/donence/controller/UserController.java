@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.donence.dto.request.SetAddressForm;
+import com.donence.dto.response.UserDetailResponse;
 import com.donence.model.Request;
 import com.donence.model.User;
 import com.donence.service.abstracts.RequestService;
@@ -36,7 +37,9 @@ public class UserController {
     @GetMapping("/me")
     public ResponseEntity<?> getProfile() {
         User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
-        return ResponseEntity.ok().body(user);
+        UserDetailResponse response = new UserDetailResponse(user);
+
+        return ResponseEntity.ok().body(response);
     }
 
     /**
@@ -49,8 +52,9 @@ public class UserController {
         User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
         user.setAddress(setAddressForm.getLat(), setAddressForm.getLon());
         userService.save(user);
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body("");
     }
+
 
     /**
      * An endpoint for address saving functionality.
