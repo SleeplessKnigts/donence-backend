@@ -51,7 +51,8 @@ CREATE TABLE IF NOT EXISTS "collection_events"
     collection_events_id SERIAL PRIMARY KEY,
     material_type        TEXT                        NOT NULL,
     event_detail         TEXT                        NOT NULL,
-    geolocation          POINT,
+    event_latitude       FLOAT                       NOT NULL,
+    event_longitude      FLOAT                       NOT NULL,
     event_date           TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );
 
