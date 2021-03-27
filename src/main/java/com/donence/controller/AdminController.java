@@ -1,25 +1,21 @@
 package com.donence.controller;
 
 import com.donence.dto.request.AssignRoleForm;
+import com.donence.dto.request.CollectionEventDto;
 import com.donence.dto.request.RecyclePointDto;
-import com.donence.model.RecyclePoint;
-import com.donence.service.abstracts.UserService;
-import com.donence.service.abstracts.RequestService;
+import com.donence.model.*;
+import com.donence.service.abstracts.CollectionEventService;
 import com.donence.service.abstracts.RecyclePointService;
-import com.donence.model.Request;
-import com.donence.model.Role;
-import com.donence.model.Roles;
-import com.donence.model.User;
-import com.donence.repository.RoleRepository;
-
+import com.donence.service.abstracts.RequestService;
+import com.donence.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -33,6 +29,9 @@ public class AdminController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    CollectionEventService collectionEventService;
 
     @GetMapping("/recycle-point/")
     public ResponseEntity<List<RecyclePointDto>> getRecyclePoints() {
@@ -48,16 +47,16 @@ public class AdminController {
         return ResponseEntity.ok("Recycle point added successfully");
     }
 
-    @GetMapping(value = { "/requests", "/requests/{isActive}" })
-    public ResponseEntity<List<Request>> getActiveRequests(@PathVariable Optional<Boolean> isActive) {
+    @GetMapping(value = {"/requests", "/requests/{isActive}"})
+    public ResponseEntity<List<Request>> getRequests(@PathVariable Optional<Boolean> isActive) {
         return isActive
                 .map(active -> ResponseEntity.ok(requestService.getRequestsByActiveOrderByCreationDateDesc(active)))
                 .orElseGet(() -> ResponseEntity.ok(requestService.getRequestOrderByCreationDateDesc()));
     }
 
-    @GetMapping(value = { "/requests/get-user-request/{userId}", "/requests/get-user-request/{userId}/{isActive}" })
-    public ResponseEntity<List<Request>> getRequests(@PathVariable Integer userId,
-            @PathVariable Optional<Boolean> isActive) {
+    @GetMapping(value = {"/requests/get-user-request/{userId}", "/requests/get-user-request/{userId}/{isActive}"})
+    public ResponseEntity<List<Request>> getUserRequests(@PathVariable Integer userId,
+                                                         @PathVariable Optional<Boolean> isActive) {
         return isActive
                 .map(active -> ResponseEntity.ok(requestService.getRequestsByActiveAndIssuerOrderByCreationDateDesc(
                         isActive.get(), userService.getUserById(userId))))
@@ -78,4 +77,21 @@ public class AdminController {
         return ResponseEntity.ok().body(email + "'s role has been changed to " + newRole.getRole().toString());
     }
 
+    @GetMapping("/collection-event")
+    public ResponseEntity<List<CollectionEventDto>> getCollectionEvents() {
+        return ResponseEntity.ok(collectionEventService.getCollectionEventListDtos());
+    }
+
+    @PostMapping("/collection-event/new")
+    public ResponseEntity<?> addCollectionEvent(@RequestBody CollectionEventDto collectionEventDto) {
+        CollectionEvent collectionEvent = new CollectionEvent();
+        collectionEvent.setEventDetail(collectionEventDto.getEventDetail());
+        collectionEvent.setEventLatitude(collectionEventDto.getLat());
+        collectionEvent.setEventLongitude(collectionEventDto.getLng());
+        collectionEvent.setMaterialType(collectionEventDto.getMaterialType());
+        collectionEvent.setEventDate(new Date(System.currentTimeMillis()));
+
+        collectionEventService.addCollectionEvent(collectionEvent);
+        return ResponseEntity.ok("Collection event added successfully");
+    }
 }
