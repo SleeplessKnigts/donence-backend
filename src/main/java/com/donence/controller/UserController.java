@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.donence.dto.request.RecyclePointDto;
 import com.donence.dto.request.SetAddressForm;
 import com.donence.dto.response.UserDetailResponse;
 import com.donence.model.Request;
 import com.donence.model.User;
+import com.donence.service.abstracts.RecyclePointService;
 import com.donence.service.abstracts.RequestService;
 import com.donence.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class UserController {
 
     @Autowired
     RequestService requestService;
+
+    @Autowired
+    RecyclePointService recyclePointService;
 
     /**
      * An endpoint for getting user details
@@ -116,11 +121,17 @@ public class UserController {
         return ResponseEntity.ok().body(requests);
     }
 
-    @GetMapping("requests/canI/{type}")
+    @GetMapping("/requests/canI/{type}")
     public ResponseEntity<?> canUserMakeRequest(@PathVariable String type) {
         User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
         boolean canThee = userService.canUserMakeRequest(user, type);
         return canThee ? ResponseEntity.ok().body("Go on then!")
                 : ResponseEntity.badRequest().body("You have request already");
     }
+
+    @GetMapping("/recycle-point")
+    public ResponseEntity<List<RecyclePointDto>> getRecyclePoints() {
+        return ResponseEntity.ok(recyclePointService.getRecyclePointDtos());
+    }
+
 }
