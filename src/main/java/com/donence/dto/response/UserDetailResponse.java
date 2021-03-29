@@ -11,9 +11,9 @@ public class UserDetailResponse {
 
     private String imageUrl;
 
-    private double lat;
+    private Double lat;
 
-    private double lng;
+    private Double lng;
 
     private String fname;
 
