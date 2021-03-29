@@ -47,14 +47,16 @@ public class UserController {
      * 
      * @param setAddressForm required request body including lat-lon double fields.
      */
+
     @PostMapping("/address")
     public ResponseEntity<?> setAddress(@Valid @RequestBody SetAddressForm setAddressForm) {
         User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
         user.setAddress(setAddressForm.getLat(), setAddressForm.getLon());
+        user.setAddressDetail(setAddressForm.getSubAdminArea(), setAddressForm.getSubLocality(),
+                setAddressForm.getThoroughfare(), setAddressForm.getPostalCode());
         userService.save(user);
         return ResponseEntity.ok().body("");
     }
-
 
     /**
      * An endpoint for address saving functionality.
@@ -65,6 +67,8 @@ public class UserController {
     public ResponseEntity<?> changeAddress(@Valid @RequestBody SetAddressForm setAddressForm) {
         User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
         user.setAddress(setAddressForm.getLat(), setAddressForm.getLon());
+        user.setAddressDetail(setAddressForm.getSubAdminArea(), setAddressForm.getSubLocality(),
+                setAddressForm.getThoroughfare(), setAddressForm.getPostalCode());
         userService.save(user);
         return ResponseEntity.ok().body(user);
     }
