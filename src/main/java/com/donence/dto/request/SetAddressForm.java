@@ -20,4 +20,12 @@ public class SetAddressForm {
     @NotNull(message = "Longitude field cannot be empty")
     private Double lon;
 
+    private String subAdminArea;
+
+    private String subLocality;
+
+    private String thoroughfare;
+
+    private String postalCode;
+
 }
