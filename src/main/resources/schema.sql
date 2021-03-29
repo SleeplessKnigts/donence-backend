@@ -6,17 +6,23 @@ CREATE TABLE IF NOT EXISTS "cloud_roles"
 
 CREATE TABLE IF NOT EXISTS "cloud_users"
 (
-    id             INT PRIMARY KEY,
-    username       TEXT UNIQUE,
-    email          TEXT NOT NULL UNIQUE,
-    auth_provider  TEXT NOT NULL,
-    image_url      TEXT,
-    f_name         TEXT,
-    latitude       FLOAT,
-    longitude      FLOAT,
-    address_detail TEXT,
-    role_id        INT  NOT NULL REFERENCES cloud_roles (role_id)
+    id              INT PRIMARY KEY,
+    username        TEXT UNIQUE,
+    email           TEXT NOT NULL UNIQUE,
+    auth_provider   TEXT NOT NULL,
+    image_url       TEXT,
+    f_name          TEXT,
+    latitude        FLOAT,
+    longitude       FLOAT,
+    sub_admin_area  TEXT,
+    sub_locality    TEXT,
+    thoroughfare    TEXT,
+    postal_code     TEXT,
+    role_id         INT  NOT NULL REFERENCES cloud_roles (role_id)
 );
+
+
+
 
 CREATE TABLE IF NOT EXISTS "recycle_points"
 (

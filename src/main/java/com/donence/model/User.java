@@ -57,6 +57,18 @@ public class User {
     @Column(name = "longitude")
     private Double longitude;
 
+    @Column(name = "sub_admin_area")
+    private String subAdminArea;
+
+    @Column(name = "sub_locality")
+    private String subLocality;
+
+    @Column(name = "thoroughfare")
+    private String thoroughfare;
+
+    @Column(name = "postal_code")
+    private String postalCode;
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
@@ -82,5 +94,12 @@ public class User {
     public void setAddress(double lat, double lon){
         setLatitude(lat);
         setLongitude(lon);
+    }
+
+    public void setAddressDetail(String subAdminArea, String subLocality, String thoroughfare, String postalCode){
+        this.subAdminArea = subAdminArea;
+        this.subLocality = subLocality;
+        this.thoroughfare = thoroughfare;
+        this.postalCode = postalCode;
     }
 }
