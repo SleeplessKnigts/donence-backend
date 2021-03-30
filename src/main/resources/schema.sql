@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS "cloud_roles"
 (
-    role_id SERIAL PRIMARY KEY,
-    role    VARCHAR(50) NOT NULL UNIQUE
+    role_id         SERIAL PRIMARY KEY,
+    role            VARCHAR(50) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS "cloud_users"
@@ -26,18 +26,19 @@ CREATE TABLE IF NOT EXISTS "cloud_users"
 
 CREATE TABLE IF NOT EXISTS "recycle_points"
 (
-    recycle_point_id        SERIAL PRIMARY KEY,
-    recycle_point_detail    TEXT NOT NULL,
-    recycle_point_latitude  FLOAT,
-    recycle_point_longitude FLOAT
+    recycle_point_id                    SERIAL PRIMARY KEY,
+    recycle_point_detail                TEXT NOT NULL,
+    recycle_point_latitude              FLOAT,
+    recycle_point_longitude             FLOAT
 );
 
 CREATE TABLE IF NOT EXISTS "news"
 (
-    news_id   SERIAL PRIMARY KEY,
-    heading   TEXT    NOT NULL,
-    published BOOLEAN NOT NULL DEFAULT FALSE,
-    content   TEXT    NOT NULL
+    news_id                 SERIAL PRIMARY KEY,
+    heading                 TEXT NOT NULL,
+    content                 TEXT NOT NULL,
+    image_url               TEXT NOT NULL,
+    created_at              TIMESTAMP WITHOUT TIME ZONE NOT NULL,
 );
 
 CREATE TABLE IF NOT EXISTS "recycling_numbers"
@@ -55,18 +56,18 @@ CREATE TABLE IF NOT EXISTS "recycling_numbers"
 CREATE TABLE IF NOT EXISTS "collection_events"
 (
     collection_events_id SERIAL PRIMARY KEY,
-    material_type        TEXT                        NOT NULL,
-    event_detail         TEXT                        NOT NULL,
-    event_latitude       FLOAT                       NOT NULL,
-    event_longitude      FLOAT                       NOT NULL,
+    material_type        TEXT NOT NULL,
+    event_detail         TEXT NOT NULL,
+    event_latitude       FLOAT NOT NULL,
+    event_longitude      FLOAT NOT NULL,
     event_date           TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "requests"
 (
-    request_id   SERIAL PRIMARY KEY,
-    created_at   TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-    active       BOOLEAN                     NOT NULL DEFAULT TRUE,
-    request_type TEXT                        NOT NULL,
-    issuer       INT                         NOT NULL REFERENCES cloud_users (id)
+    request_id                  SERIAL PRIMARY KEY,
+    created_at                  TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    active                      BOOLEAN NOT NULL DEFAULT TRUE,
+    request_type                TEXT NOT NULL,
+    issuer                      INT NOT NULL REFERENCES cloud_users (id)
 );
