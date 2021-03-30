@@ -2,12 +2,16 @@ package com.donence.controller;
 
 import com.donence.dto.request.AssignRoleForm;
 import com.donence.dto.request.CollectionEventDto;
+import com.donence.dto.request.NewForm;
 import com.donence.dto.request.RecyclePointDto;
 import com.donence.model.*;
 import com.donence.service.abstracts.CollectionEventService;
+import com.donence.service.abstracts.NewsService;
 import com.donence.service.abstracts.RecyclePointService;
 import com.donence.service.abstracts.RequestService;
 import com.donence.service.abstracts.UserService;
+import com.nimbusds.oauth2.sdk.Response;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +33,9 @@ public class AdminController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    NewsService newsService;
 
     @Autowired
     CollectionEventService collectionEventService;
@@ -93,5 +100,12 @@ public class AdminController {
 
         collectionEventService.addCollectionEvent(collectionEvent);
         return ResponseEntity.ok("Collection event added successfully");
+    }
+
+    @PostMapping("/news")
+    public ResponseEntity<?> addNew(@RequestBody NewForm newForm){
+        News newNews = new News(newForm.getHeading(), newForm.getContent(), newForm.getImageUrl());
+        boolean isSuccess = newsService.addNews(newNews);
+        return isSuccess ? ResponseEntity.ok("Added") : ResponseEntity.badRequest().body("Something went wrong");
     }
 }
