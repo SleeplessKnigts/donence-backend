@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS "news"
     heading                 TEXT NOT NULL,
     content                 TEXT NOT NULL,
     image_url               TEXT NOT NULL,
-    created_at              TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    created_at              TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "recycling_numbers"

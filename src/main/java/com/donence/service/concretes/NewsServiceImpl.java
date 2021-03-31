@@ -5,7 +5,9 @@ import com.donence.repository.NewsRepository;
 import com.donence.service.abstracts.NewsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class NewsServiceImpl implements NewsService {
 
     @Autowired

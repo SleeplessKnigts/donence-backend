@@ -3,6 +3,7 @@ package com.donence.model;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +13,7 @@ import lombok.Data;
 
 @Table(name = "news", schema = "public")
 @Data
+@Entity
 public class News {
 
     @Id
