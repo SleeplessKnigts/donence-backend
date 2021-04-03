@@ -6,9 +6,12 @@ import javax.validation.Valid;
 
 import com.donence.dto.request.RecyclePointDto;
 import com.donence.dto.request.SetAddressForm;
+import com.donence.dto.response.NewsResponse;
 import com.donence.dto.response.UserDetailResponse;
+import com.donence.model.News;
 import com.donence.model.Request;
 import com.donence.model.User;
+import com.donence.service.abstracts.NewsService;
 import com.donence.service.abstracts.RecyclePointService;
 import com.donence.service.abstracts.RequestService;
 import com.donence.service.abstracts.UserService;
@@ -34,6 +37,9 @@ public class UserController {
 
     @Autowired
     RecyclePointService recyclePointService;
+
+    @Autowired
+    NewsService newsService;
 
     /**
      * An endpoint for getting user details
@@ -132,6 +138,20 @@ public class UserController {
     @GetMapping("/recycle-point")
     public ResponseEntity<List<RecyclePointDto>> getRecyclePoints() {
         return ResponseEntity.ok(recyclePointService.getRecyclePointDtos());
+    }
+
+    @GetMapping("/news/{id}")
+    public ResponseEntity<?> getNewsById(@PathVariable Integer id) {
+        News news = newsService.getNewsById(id);
+        NewsResponse response = new NewsResponse(news.getContent(), news.getHeading(), news.getCreatedAt(),
+                news.getImageUrl());
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/news")
+    public ResponseEntity<?> getAllNews() {
+        List<News> allNews = newsService.getAllNews();
+        return ResponseEntity.ok(allNews);
     }
 
 }

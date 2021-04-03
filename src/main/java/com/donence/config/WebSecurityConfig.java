@@ -53,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/error", "/favicon.ico", "/**/*.css", "/**/*.js", "/**/*.html", "/**/*.jpg")
                 .permitAll()
                 .antMatchers("/oauth2/**").permitAll()
+                .antMatchers("/api/user/news/**").permitAll()
                 .antMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and().oauth2Login()

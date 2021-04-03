@@ -33,11 +33,21 @@ public class News {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    public News(){}
+
     public News(String heading, String content, String imageUrl){
         this.heading = heading;
         this.content = content;
         this.imageUrl = imageUrl;
         this.createdAt = LocalDateTime.now();
+    }
+
+    public Integer getId(){
+        return this.id;
+    }
+
+    public void setId(Integer id){
+        this.id = id;
     }
 
 
