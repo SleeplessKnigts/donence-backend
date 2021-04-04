@@ -15,9 +15,12 @@ public class RecyclePointDto {
 
     private Double lng;
 
-    public RecyclePointDto(@NotBlank String recyclePointDetail, Double lat, Double lng) {
+    private String recyclyPointPlaceType;
+
+    public RecyclePointDto(@NotBlank String recyclePointDetail, Double lat, Double lng, String recyclePointPlaceType) {
         this.recyclePointDetail = recyclePointDetail;
         this.lat = lat;
         this.lng = lng;
+        this.recyclyPointPlaceType = recyclePointPlaceType;
     }
 }

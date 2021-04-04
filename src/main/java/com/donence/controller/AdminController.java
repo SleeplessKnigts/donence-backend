@@ -49,6 +49,7 @@ public class AdminController {
     public ResponseEntity<?> addRecyclePoint(@RequestBody RecyclePointDto recyclePointDto) {
         RecyclePoint recyclePoint = new RecyclePoint();
         recyclePoint.setRecyclePointDetail(recyclePointDto.getRecyclePointDetail());
+        recyclePoint.setRecyclePointPlaceType(recyclePointDto.getRecyclyPointPlaceType());
         recyclePoint.setGeolocation(recyclePointDto.getLat(), recyclePointDto.getLng());
         recyclePointService.add(recyclePoint);
         return ResponseEntity.ok("Recycle point added successfully");

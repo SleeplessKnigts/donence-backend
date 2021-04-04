@@ -29,7 +29,8 @@ CREATE TABLE IF NOT EXISTS "recycle_points"
     recycle_point_id                    SERIAL PRIMARY KEY,
     recycle_point_detail                TEXT NOT NULL,
     recycle_point_latitude              FLOAT,
-    recycle_point_longitude             FLOAT
+    recycle_point_longitude             FLOAT,
+    recycle_point_place_type            TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "news"

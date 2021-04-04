@@ -22,6 +22,9 @@ public class RecyclePoint {
     @Column(name = "recycle_point_longitude")
     private Double recyclePointLongitude;
 
+    @Column(name = "recycle_point_place_type")
+    private String recyclePointPlaceType;
+
     public void setGeolocation(Double latitude, Double longitude){
         this.recyclePointLatitude = latitude;
         this.recyclePointLongitude = longitude;
