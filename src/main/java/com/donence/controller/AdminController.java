@@ -5,19 +5,12 @@ import com.donence.dto.request.CollectionEventDto;
 import com.donence.dto.request.NewForm;
 import com.donence.dto.request.RecyclePointDto;
 import com.donence.model.*;
-import com.donence.service.abstracts.CollectionEventService;
-import com.donence.service.abstracts.NewsService;
-import com.donence.service.abstracts.RecyclePointService;
-import com.donence.service.abstracts.RequestService;
-import com.donence.service.abstracts.UserService;
-import com.nimbusds.oauth2.sdk.Response;
-
+import com.donence.service.abstracts.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,6 +46,22 @@ public class AdminController {
         recyclePoint.setGeolocation(recyclePointDto.getLat(), recyclePointDto.getLng());
         recyclePointService.add(recyclePoint);
         return ResponseEntity.ok("Recycle point added successfully");
+    }
+
+    @DeleteMapping("/recycle-point/delete/{recyclePointId}")
+    public ResponseEntity<?> deleteRecyclePoint(@PathVariable Integer recyclePointId) {
+        recyclePointService.delete(recyclePointService.getPointById(recyclePointId));
+        return ResponseEntity.ok("Recycle point deleted successfully");
+    }
+
+    @PutMapping("/recycle-point/update")
+    public ResponseEntity<?> updateRecyclePoint(@RequestBody RecyclePointDto recyclePointDto) {
+        RecyclePoint recyclePoint = recyclePointService.getPointById(recyclePointDto.getRecyclePointId());
+        recyclePoint.setRecyclePointDetail(recyclePointDto.getRecyclePointDetail());
+        recyclePoint.setRecyclePointPlaceType(recyclePointDto.getRecyclePointPlaceType());
+        recyclePoint.setGeolocation(recyclePointDto.getLat(), recyclePointDto.getLng());
+        recyclePointService.add(recyclePoint);
+        return ResponseEntity.ok("Recycle point updated successfully");
     }
 
     @GetMapping(value = {"/requests", "/requests/{isActive}"})

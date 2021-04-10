@@ -8,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class RecyclePointDto {
 
-    @NotBlank
     private Integer recyclePointId;
 
     @NotBlank
