@@ -106,14 +106,33 @@ public class AdminController {
         collectionEvent.setEventLatitude(collectionEventDto.getLat());
         collectionEvent.setEventLongitude(collectionEventDto.getLng());
         collectionEvent.setMaterialType(collectionEventDto.getMaterialType());
-        collectionEvent.setEventDate(new Date(System.currentTimeMillis()));
+        collectionEvent.setEventDate(collectionEventDto.getCollectionEventDate());
 
         collectionEventService.addCollectionEvent(collectionEvent);
         return ResponseEntity.ok("Collection event added successfully");
     }
 
+    @DeleteMapping("/collection-event/delete/{collectionEventId}")
+    public ResponseEntity<?> deleteCollectionEvent(@PathVariable Integer collectionEventId) {
+        collectionEventService.deleteCollectionEvent(collectionEventService.getCollectionEventById(collectionEventId));
+        return ResponseEntity.ok("Collection event deleted successfully");
+    }
+
+    @PutMapping("/collection-event/update")
+    public ResponseEntity<?> updateRecyclePoint(@RequestBody CollectionEventDto collectionEventDto) {
+        CollectionEvent collectionEvent = collectionEventService.getCollectionEventById(collectionEventDto.getCollectionEventId());
+        collectionEvent.setEventDetail(collectionEventDto.getEventDetail());
+        collectionEvent.setEventLatitude(collectionEventDto.getLat());
+        collectionEvent.setEventLongitude(collectionEventDto.getLng());
+        collectionEvent.setMaterialType(collectionEventDto.getMaterialType());
+        collectionEvent.setEventDate(collectionEventDto.getCollectionEventDate());
+
+        collectionEventService.addCollectionEvent(collectionEvent);
+        return ResponseEntity.ok("Collection event updated successfully");
+    }
+
     @PostMapping("/news")
-    public ResponseEntity<?> addNew(@RequestBody NewForm newForm){
+    public ResponseEntity<?> addNew(@RequestBody NewForm newForm) {
         News newNews = new News(newForm.getHeading(), newForm.getContent(), newForm.getImageUrl());
         boolean isSuccess = newsService.addNews(newNews);
         return isSuccess ? ResponseEntity.ok("Added") : ResponseEntity.badRequest().body("Something went wrong");

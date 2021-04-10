@@ -7,6 +7,12 @@ import java.util.List;
 
 public interface CollectionEventService {
     List<CollectionEvent> getCollectionEventList();
+
     List<CollectionEventDto> getCollectionEventListDtos();
+
     void addCollectionEvent(CollectionEvent collectionEvent);
+
+    void deleteCollectionEvent(CollectionEvent collectionEvent);
+
+    CollectionEvent getCollectionEventById(Integer collectionEventId);
 }

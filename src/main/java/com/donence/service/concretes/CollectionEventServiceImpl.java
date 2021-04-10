@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CollectionEventServiceImpl implements CollectionEventService {
@@ -26,8 +27,8 @@ public class CollectionEventServiceImpl implements CollectionEventService {
         List<CollectionEventDto> collectionEventDtos = new ArrayList<>();
 
         for (CollectionEvent collectionEvent : collectionEvents) {
-            collectionEventDtos.add(new CollectionEventDto(collectionEvent.getMaterialType(), collectionEvent.getEventDetail(),
-                    collectionEvent.getEventLatitude(), collectionEvent.getEventLongitude()));
+            collectionEventDtos.add(new CollectionEventDto(collectionEvent.getCollectionEventId(), collectionEvent.getMaterialType(), collectionEvent.getEventDetail(),
+                    collectionEvent.getEventLatitude(), collectionEvent.getEventLongitude(), collectionEvent.getEventDate()));
         }
         return collectionEventDtos;
     }
@@ -35,5 +36,16 @@ public class CollectionEventServiceImpl implements CollectionEventService {
     @Override
     public void addCollectionEvent(CollectionEvent collectionEvent) {
         collectionEventRepository.save(collectionEvent);
+    }
+
+    @Override
+    public void deleteCollectionEvent(CollectionEvent collectionEvent) {
+        collectionEventRepository.delete(collectionEvent);
+    }
+
+    @Override
+    public CollectionEvent getCollectionEventById(Integer collectionEventId) {
+        Optional<CollectionEvent> collectionEvent = collectionEventRepository.findById(collectionEventId);
+        return collectionEvent.orElse(null);
     }
 }
