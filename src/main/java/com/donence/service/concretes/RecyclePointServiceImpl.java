@@ -34,7 +34,7 @@ public class RecyclePointServiceImpl implements RecyclePointService {
 
         for (RecyclePoint recyclePoint : recyclePoints) {
             recyclePointDtos.add(
-                    new RecyclePointDto(recyclePoint.getRecyclePointDetail(), recyclePoint.getRecyclePointLatitude(),
+                    new RecyclePointDto(recyclePoint.getRecyclePointId(),recyclePoint.getRecyclePointDetail(), recyclePoint.getRecyclePointLatitude(),
                             recyclePoint.getRecyclePointLongitude(), recyclePoint.getRecyclePointPlaceType()));
         }
         return recyclePointDtos;

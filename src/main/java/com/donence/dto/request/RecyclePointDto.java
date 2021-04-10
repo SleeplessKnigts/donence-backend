@@ -9,18 +9,22 @@ import javax.validation.constraints.NotBlank;
 public class RecyclePointDto {
 
     @NotBlank
+    private Integer recyclePointId;
+
+    @NotBlank
     private String recyclePointDetail;
 
     private Double lat;
 
     private Double lng;
 
-    private String recyclyPointPlaceType;
+    private String recyclePointPlaceType;
 
-    public RecyclePointDto(@NotBlank String recyclePointDetail, Double lat, Double lng, String recyclePointPlaceType) {
+    public RecyclePointDto(@NotBlank Integer id, @NotBlank String recyclePointDetail, Double lat, Double lng, String recyclePointPlaceType) {
+        this.recyclePointId = id;
         this.recyclePointDetail = recyclePointDetail;
         this.lat = lat;
         this.lng = lng;
-        this.recyclyPointPlaceType = recyclePointPlaceType;
+        this.recyclePointPlaceType = recyclePointPlaceType;
     }
 }
