@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.donence.dto.request.CollectionEventDto;
 import com.donence.dto.request.RecyclePointDto;
 import com.donence.dto.request.SetAddressForm;
 import com.donence.dto.response.NewsResponse;
@@ -11,6 +12,7 @@ import com.donence.dto.response.UserDetailResponse;
 import com.donence.model.News;
 import com.donence.model.Request;
 import com.donence.model.User;
+import com.donence.service.abstracts.CollectionEventService;
 import com.donence.service.abstracts.NewsService;
 import com.donence.service.abstracts.RecyclePointService;
 import com.donence.service.abstracts.RequestService;
@@ -40,6 +42,9 @@ public class UserController {
 
     @Autowired
     NewsService newsService;
+
+    @Autowired
+    CollectionEventService collectionEventService;
 
     /**
      * An endpoint for getting user details
@@ -138,6 +143,11 @@ public class UserController {
     @GetMapping("/recycle-point")
     public ResponseEntity<List<RecyclePointDto>> getRecyclePoints() {
         return ResponseEntity.ok(recyclePointService.getRecyclePointDtos());
+    }
+
+    @GetMapping("/collection-event")
+    public ResponseEntity<List<CollectionEventDto>> getCollectionEvents() {
+        return ResponseEntity.ok(collectionEventService.getCollectionEventListDtos());
     }
 
     @GetMapping("/news/{id}")
