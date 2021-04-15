@@ -1,5 +1,6 @@
 package com.donence;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -14,10 +15,27 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.messaging.FirebaseMessaging;
+import org.springframework.core.io.ClassPathResource;
+
 @SpringBootApplication
 @EnableConfigurationProperties(AppProperties.class)
 public class BackendApplication {
 
+    @Bean
+    FirebaseMessaging firebaseMessaging() throws IOException {
+        GoogleCredentials googleCredentials = GoogleCredentials
+                .fromStream(new ClassPathResource("firebase-service-account.json").getInputStream());
+        FirebaseOptions firebaseOptions = FirebaseOptions
+                .builder()
+                .setCredentials(googleCredentials)
+                .build();
+        FirebaseApp app = FirebaseApp.initializeApp(firebaseOptions, "my-app");
+        return FirebaseMessaging.getInstance(app);
+    }
     public static void main(String[] args) {
         SpringApplication.run(BackendApplication.class, args);
     }

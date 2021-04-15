@@ -5,7 +5,10 @@ import com.donence.dto.request.CollectionEventDto;
 import com.donence.dto.request.NewForm;
 import com.donence.dto.request.RecyclePointDto;
 import com.donence.model.*;
+import com.donence.service.FirebaseMessagingService;
 import com.donence.service.abstracts.*;
+import com.google.firebase.messaging.FirebaseMessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +20,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
+
+    @Autowired
+    FirebaseMessagingService firebaseMessagingService;
 
     @Autowired
     RecyclePointService recyclePointService;
@@ -64,16 +70,16 @@ public class AdminController {
         return ResponseEntity.ok("Recycle point updated successfully");
     }
 
-    @GetMapping(value = {"/requests", "/requests/{isActive}"})
+    @GetMapping(value = { "/requests", "/requests/{isActive}" })
     public ResponseEntity<List<Request>> getRequests(@PathVariable Optional<Boolean> isActive) {
         return isActive
                 .map(active -> ResponseEntity.ok(requestService.getRequestsByActiveOrderByCreationDateDesc(active)))
                 .orElseGet(() -> ResponseEntity.ok(requestService.getRequestOrderByCreationDateDesc()));
     }
 
-    @GetMapping(value = {"/requests/get-user-request/{userId}", "/requests/get-user-request/{userId}/{isActive}"})
+    @GetMapping(value = { "/requests/get-user-request/{userId}", "/requests/get-user-request/{userId}/{isActive}" })
     public ResponseEntity<List<Request>> getUserRequests(@PathVariable Integer userId,
-                                                         @PathVariable Optional<Boolean> isActive) {
+            @PathVariable Optional<Boolean> isActive) {
         return isActive
                 .map(active -> ResponseEntity.ok(requestService.getRequestsByActiveAndIssuerOrderByCreationDateDesc(
                         isActive.get(), userService.getUserById(userId))))
@@ -109,6 +115,14 @@ public class AdminController {
         collectionEvent.setEventDate(collectionEventDto.getCollectionEventDate());
 
         collectionEventService.addCollectionEvent(collectionEvent);
+
+        try {
+            firebaseMessagingService.sendNotification(collectionEventDto.getLat(), collectionEventDto.getLng());
+        } catch (FirebaseMessagingException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Something bad happened!");
+        }
+
         return ResponseEntity.ok("Collection event added successfully");
     }
 
@@ -120,7 +134,8 @@ public class AdminController {
 
     @PutMapping("/collection-event/update")
     public ResponseEntity<?> updateRecyclePoint(@RequestBody CollectionEventDto collectionEventDto) {
-        CollectionEvent collectionEvent = collectionEventService.getCollectionEventById(collectionEventDto.getCollectionEventId());
+        CollectionEvent collectionEvent = collectionEventService
+                .getCollectionEventById(collectionEventDto.getCollectionEventId());
         collectionEvent.setEventDetail(collectionEventDto.getEventDetail());
         collectionEvent.setEventLatitude(collectionEventDto.getLat());
         collectionEvent.setEventLongitude(collectionEventDto.getLng());

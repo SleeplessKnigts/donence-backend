@@ -33,4 +33,6 @@ public interface UserService {
     Request createRequest(User user, String requestType);
 
     Request removeRequest(User user, Integer requestId);
+
+    List<User> getAllUsers();
 }
