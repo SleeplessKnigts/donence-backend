@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS "cloud_users"
     sub_locality    TEXT,
     thoroughfare    TEXT,
     postal_code     TEXT,
+    device_token    TEXT,
     role_id         INT  NOT NULL REFERENCES cloud_roles (role_id)
 );
 

@@ -164,4 +164,10 @@ public class UserController {
         return ResponseEntity.ok(allNews);
     }
 
+    @PostMapping("/token/{token}")
+    public ResponseEntity<?> addToken(@PathVariable String token){
+        User user = userService.getUserByAuthentication(SecurityContextHolder.getContext().getAuthentication());
+        user.setDeviceToken(token);
+        return ResponseEntity.ok().body("It is a success!");
+    }
 }

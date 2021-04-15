@@ -69,6 +69,9 @@ public class User {
     @Column(name = "postal_code")
     private String postalCode;
 
+    @Column(name = "device_token")
+    private String deviceToken;
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
