@@ -13,4 +13,6 @@ public interface RequestService{
     List<Request> getRequestsByIssuerOrderByCreationDateDesc(User issuer);
 
     List<Request> getRequestOrderByCreationDateDesc();
+
+    void completeRequest(Integer id);
 }

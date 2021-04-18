@@ -34,4 +34,11 @@ public class RequestServiceImpl implements RequestService {
     public List<Request> getRequestOrderByCreationDateDesc() {
         return requestRepository.findAllByOrderByCreationDateDesc();
     }
+
+    @Override
+    public void completeRequest(Integer id) {
+        Request request = requestRepository.getOne(id);
+        request.setActive(false);
+        requestRepository.save(request);
+    }
 }

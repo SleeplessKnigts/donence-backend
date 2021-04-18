@@ -77,6 +77,13 @@ public class AdminController {
                 .orElseGet(() -> ResponseEntity.ok(requestService.getRequestOrderByCreationDateDesc()));
     }
 
+    @PostMapping("/requests/{requestId}/complete")
+    public ResponseEntity<?> makeComplete(@PathVariable String requestId) {
+        Integer id = Integer.parseInt(requestId);
+        requestService.completeRequest(id);
+        return ResponseEntity.ok("Request set to completed");
+    }
+
     @GetMapping(value = { "/requests/get-user-request/{userId}", "/requests/get-user-request/{userId}/{isActive}" })
     public ResponseEntity<List<Request>> getUserRequests(@PathVariable Integer userId,
             @PathVariable Optional<Boolean> isActive) {
