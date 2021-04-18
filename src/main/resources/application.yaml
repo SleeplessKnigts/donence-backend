@@ -51,5 +51,5 @@ app:
         tokenExpirationMsec: 2592000000 #equals to a month
     oauth2:
         authorizedRedirectUris:
-            - http://localhost:3000/oauth2/redirect
+            - https://donence.web.app/oauth2/redirect
             - androidapp://oauth2/redirect
