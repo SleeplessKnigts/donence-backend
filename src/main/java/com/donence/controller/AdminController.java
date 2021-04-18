@@ -116,12 +116,12 @@ public class AdminController {
 
         collectionEventService.addCollectionEvent(collectionEvent);
 
-        try {
-            firebaseMessagingService.sendNotification(collectionEventDto.getLat(), collectionEventDto.getLng());
-        } catch (FirebaseMessagingException e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body("Something bad happened!");
-        }
+        // try {
+        //     firebaseMessagingService.sendNotification(collectionEventDto.getLat(), collectionEventDto.getLng());
+        // } catch (FirebaseMessagingException e) {
+        //     e.printStackTrace();
+        //     return ResponseEntity.badRequest().body("Something bad happened!");
+        // }
 
         return ResponseEntity.ok("Collection event added successfully");
     }
