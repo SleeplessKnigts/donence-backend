@@ -14,10 +14,6 @@
     <name>donence</name>
     <description>Rest API Server for Donence</description>
 
-    <properties>
-        <java.version>11</java.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
