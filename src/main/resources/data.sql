@@ -8,10 +8,5 @@ INSERT INTO cloud_roles (role)
 SELECT 'ROLE_USER'
 WHERE NOT EXISTS(SELECT * FROM cloud_roles WHERE role = 'ROLE_USER');
 
-update 'cloud_users'
-set role_id=1
-where id=101;
-
-update 'cloud_users'
-set latitude=39,longitude=32
-where id=102;
+INSERT INTO cloud_users (id, username, email, auth_provider, latitude, longitude, role_id)
+values (1, 'admin', 'donence.dev@gmail.com', 'google', 32.0, 39.0, 1)
